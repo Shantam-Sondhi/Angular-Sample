@@ -20,21 +20,3 @@ jobs:
             echo "PR title does not start with 'MA-'"
             exit 1
           fi
-
-      - name: Set status check
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: github.context.pullRequest.number,
-              owner: github.context.repo.owner,
-              repo: github.context.repo.repo,
-              body: 'PR title is valid'
-            })
-            github.rest.checks.create({
-              name: 'PR Title Validator',
-              head_sha: github.context.sha,
-              status: 'completed',
-              conclusion: 'success'
-            })
-            
