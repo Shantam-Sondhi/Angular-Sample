@@ -1,0 +1,39 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Validate PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [[ "$PR_TITLE"!= MA-* ]]; then
+            echo "PR title does not start with 'MA-'"
+            exit 1
+          fi
+          echo "PR title is valid"
+
+      - name: Set status check
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.createComment({
+              issue_number: github.context.pullRequest.number,
+              owner: github.context.repo.owner,
+              repo: github.context.repo.repo,
+              body: 'PR title is valid'
+            })
+            github.checks.create({
+              name: 'PR Title Validator',
+              head_sha: github.context.sha,
+              status: 'completed',
+              conclusion: 'success'
+            })
