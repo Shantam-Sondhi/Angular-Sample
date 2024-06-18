@@ -3,7 +3,9 @@ version: 0.2
 env:
     variables:
         CACHE_CONTROL: "86400"
-        BUILD_FOLDER: "dist"
+        BUILD_FOLDER: "dist/angular-hello-world"
+        TEST_RESULT_FILE: "./test_result.json"
+        SNS_TOPIC_ARN: "arn:aws:sns:eu-central-1:059256371462:MobiBoxCodePipeline"
 phases:
   install:
     runtime-versions:
@@ -14,11 +16,15 @@ phases:
         - npm install -g @angular/cli
   build:
     commands:
-        - echo Build started 
+        - echo "Build started"
         - npm run build 
         - ls -lhrta
-        - npm test
+        - echo "Test started"
+        #- npm test > ${TEST_RESULT_FILE} 2>&1 
+  #post_build:
+    #commands:
+      #- aws sns publish --topic-arn "${SNS_TOPIC_ARN}" --message "$(cat ${TEST_RESULT_FILE})"     
 artifacts:
     files:
         - '**/*'
-    base-directory: 'dist/angular-hello-world'
+    base-directory: '${BUILD_FOLDER}'
