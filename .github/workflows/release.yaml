@@ -1,31 +1,15 @@
-name: Release
+# .github/workflows/tagpr.yml
+name: tagpr
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   pull_request:
-    branches: [ main ]
-
+    branches: ["main"]
 jobs:
-  release:
+  tagpr:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Release to GitHub
-        uses: cycjimmy/semantic-release-action@v2.5.4
-        with:
-          semantic_version: 18.0.0
-          extra_plugins: |
-            @semantic-release/changelog@5.0.1
-            @semantic-release/git
-          branches: |
-            ['main']
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    - uses: actions/checkout@v3
+    - uses: Songmu/tagpr@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
