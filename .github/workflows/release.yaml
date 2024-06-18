@@ -27,3 +27,5 @@ jobs:
             @semantic-release/git
           branches: |
             ['main']
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
