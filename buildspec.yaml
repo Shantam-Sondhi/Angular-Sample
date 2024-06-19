@@ -3,9 +3,10 @@ version: 0.2
 env:
     variables:
         CACHE_CONTROL: "86400"
-        BUILD_FOLDER: "dist/angular-hello-world"
+        BUILD_FOLDER: "dist/angular-hello-world/"
         TEST_RESULT_FILE: "./test_result.json"
         SNS_TOPIC_ARN: "arn:aws:sns:eu-central-1:059256371462:MobiBoxCodePipeline"
+        S3_BUCKET: "s3://shantam-main-codebuild/"
 phases:
   install:
     runtime-versions:
@@ -19,12 +20,16 @@ phases:
         - echo "Build started"
         - npm run build 
         - ls -lhrta
-        - echo "Test started"
+        #- echo "Test started"
         #- npm test > ${TEST_RESULT_FILE} 2>&1 
   #post_build:
     #commands:
-      #- aws sns publish --topic-arn "${SNS_TOPIC_ARN}" --message "$(cat ${TEST_RESULT_FILE})"     
-artifacts:
-    files:
-        - '**/*'
-    base-directory: '${BUILD_FOLDER}'
+      #- aws sns publish --topic-arn "${SNS_TOPIC_ARN}" --message "$(cat ${TEST_RESULT_FILE})" 
+  post_build:
+    commands:
+      #- TAG_NUMBER="$(git describe --tags --abbrev=0)"
+      - aws s3 cp --recursive ${BUILD_FOLDER} ${S3_BUCKET}
+#artifacts:
+    #files:
+        #- '**/*'
+    #base-directory: '${BUILD_FOLDER}'
