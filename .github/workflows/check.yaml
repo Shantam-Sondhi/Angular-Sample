@@ -39,4 +39,5 @@ jobs:
         fi
 
         echo "All environment variables match the expected values."
+        cat src/environments/environment.ts
 
