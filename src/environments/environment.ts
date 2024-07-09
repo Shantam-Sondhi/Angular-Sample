@@ -1,0 +1,5 @@
+EXPECTED_API_URL="https://api.example.com"
+EXPECTED_API_KEY="your-api-key-2"
+EXPECTED_AUTH_DOMAIN="auth.example.com"
+EXPECTED_PROJECT_ID="your-project-id"
+EXPECTED_STORAGE_BUCKET="your-storage-bucket-2"
