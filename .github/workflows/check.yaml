@@ -20,8 +20,8 @@ jobs:
       id: check_env_vars
       run: |
         # Define expected values
-        EXPECTED_API_URL={{ secrets.EXPECTED_API_URL }}
-        EXPECTED_API_KEY={{ secrets.EXPECTED_API_KEY }}
+        EXPECTED_API_URL=${{ secrets.EXPECTED_API_URL }}
+        EXPECTED_API_KEY=${{ secrets.EXPECTED_API_KEY }}
         
         # Read the environment.ts file and extract values
         API_URL=$(grep -oP 'API_URL: "\K[^"]+' src/environments/environment.ts)
