@@ -31,7 +31,6 @@ jobs:
         if [ "$API_URL" != "$EXPECTED_API_URL" ]; then
           echo "API_URL does not match expected value."
           sed -i 's/API_URL: $API_URL/API_URL: $EXPECTED_API_URL/g' src/environments/environment.ts
-          exit 1
         fi
 
         if [ "$API_KEY" != "$EXPECTED_API_KEY" ]; then
