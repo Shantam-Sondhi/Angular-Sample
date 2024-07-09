@@ -1,0 +1,39 @@
+name: Build and Deploy Angular App
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Check and update environment variables
+      run: |
+        # Define expected values
+        EXPECTED_API_URL="https://api.example.com"
+        EXPECTED_API_KEY="your-api-key"
+        EXPECTED_AUTH_DOMAIN="auth.example.com"
+        EXPECTED_PROJECT_ID="your-project-id"
+        EXPECTED_STORAGE_BUCKET="your-storage-bucket"
+        
+        # File path
+        ENV_FILE=src/environments/environment.ts
+        
+        # Check and update the environment.ts file
+        sed -i "s#\(API_URL: \"\)[^\"]*#\1$EXPECTED_API_URL#g" $ENV_FILE
+        sed -i "s#\(API_KEY: \"\)[^\"]*#\1$EXPECTED_API_KEY#g" $ENV_FILE
+        sed -i "s#\(AUTH_DOMAIN: \"\)[^\"]*#\1$EXPECTED_AUTH_DOMAIN#g" $ENV_FILE
+        sed -i "s#\(PROJECT_ID: \"\)[^\"]*#\1$EXPECTED_PROJECT_ID#g" $ENV_FILE
+        sed -i "s#\(STORAGE_BUCKET: \"\)[^\"]*#\1$EXPECTED_STORAGE_BUCKET#g" $ENV_FILE
+        
+        echo "Checked and updated environment variables in $ENV_FILE."
+        cat src/environments/environment.ts
