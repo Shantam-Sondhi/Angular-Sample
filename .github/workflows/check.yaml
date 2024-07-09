@@ -26,7 +26,7 @@ jobs:
         EXPECTED_STORAGE_BUCKET="your-storage-bucket"
         
         # File path
-        ENV_FILE=src/environments/environment.ts
+        ENV_FILE=/home/runner/work/Angular-Sample/Angular-Sample/src/environments/environment.ts
         # Output the original environment.ts file for debugging
         echo "Original environment.ts:"
         cat $ENV_FILE
