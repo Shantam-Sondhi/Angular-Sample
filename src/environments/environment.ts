@@ -1,7 +1,9 @@
 export const environment = {
-  API_URL: "https://api.example.com",
-  API_KEY: "your-api-key-2",
-  AUTH_DOMAIN: "auth.example.com",
-  PROJECT_ID: "your-project-id",
-  STORAGE_BUCKET: "your-storage-bucket-2"
+  baseWebsite: 'https://abc.com/home',
+  cookieDomain: 'abc.com',
+  baseConsole: 'http://abc.com/#/',
+  baseDomain: 'https://rpt.abc.com/',
+  baseDomainV2: 'https://rptcore.abc.com/api/roles/',
+  baseDomainV3: 'https://rptcore.abc.com/api/',
+  testingSiteKey: 'mRgmAARMSQAyz_Y'
 };
