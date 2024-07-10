@@ -28,17 +28,23 @@ jobs:
         Expected_baseDomainV3="https://rptcore.abc.com/api/"
         Expected_testingSiteKey="mRgmAARMSQAyz_Y5555"
 
+        # Check if environment.ts exists
+        if [ ! -f src/environments/environment.ts ]; then
+          echo "Error: src/environments/environment.ts does not exist."
+          exit 1
+        fi
+
         # Read the environment.ts file and extract values
         echo "Reading values from environment.ts file"
         cat src/environments/environment.ts
 
-        baseWebsite=$(grep -oP 'baseWebsite: "\K[^"]+' src/environments/environment.ts)
-        cookieDomain=$(grep -oP 'cookieDomain: "\K[^"]+' src/environments/environment.ts)
-        baseConsole=$(grep -oP 'baseConsole: "\K[^"]+' src/environments/environment.ts)
-        baseDomain=$(grep -oP 'baseDomain: "\K[^"]+' src/environments/environment.ts)
-        baseDomainV2=$(grep -oP 'baseDomainV2: "\K[^"]+' src/environments/environment.ts)
-        baseDomainV3=$(grep -oP 'baseDomainV3: "\K[^"]+' src/environments/environment.ts)
-        testingSiteKey=$(grep -oP 'testingSiteKey: "\K[^"]+' src/environments/environment.ts)
+        baseWebsite=$(grep -oP "baseWebsite: '\K[^']+" src/environments/environment.ts)
+        cookieDomain=$(grep -oP "cookieDomain: '\K[^']+" src/environments/environment.ts)
+        baseConsole=$(grep -oP "baseConsole: '\K[^']+" src/environments/environment.ts)
+        baseDomain=$(grep -oP "baseDomain: '\K[^']+" src/environments/environment.ts)
+        baseDomainV2=$(grep -oP "baseDomainV2: '\K[^']+" src/environments/environment.ts)
+        baseDomainV3=$(grep -oP "baseDomainV3: '\K[^']+" src/environments/environment.ts)
+        testingSiteKey=$(grep -oP "testingSiteKey: '\K[^']+" src/environments/environment.ts)
 
         echo "Extracted values:"
         echo "baseWebsite: $baseWebsite"
@@ -52,38 +58,4 @@ jobs:
         # Check if the values match the Expected values
         if [ "$baseWebsite" != "$Expected_baseWebsite" ]; then
           echo "baseWebsite does not match Expected value."
-          sed -i "s#baseWebsite: '[^']*'#baseWebsite: '$Expected_baseWebsite'#" src/environments/environment.ts
-        fi
-        
-        if [ "$cookieDomain" != "$Expected_cookieDomain" ]; then
-          echo "cookieDomain does not match Expected value."
-          sed -i "s#cookieDomain: '[^']*'#cookieDomain: '$Expected_cookieDomain'#" src/environments/environment.ts
-        fi
-
-        if [ "$baseConsole" != "$Expected_baseConsole" ]; then
-          echo "baseConsole does not match Expected value."
-          sed -i "s#baseConsole: '[^']*'#baseConsole: '$Expected_baseConsole'#" src/environments/environment.ts
-        fi
-
-        if [ "$baseDomain" != "$Expected_baseDomain" ]; then
-          echo "baseDomain does not match Expected value."
-          sed -i "s#baseDomain: '[^']*'#baseDomain: '$Expected_baseDomain'#" src/environments/environment.ts
-        fi
-
-        if [ "$baseDomainV2" != "$Expected_baseDomainV2" ]; then
-          echo "baseDomainV2 does not match Expected value."
-          sed -i "s#baseDomainV2: '[^']*'#baseDomainV2: '$Expected_baseDomainV2'#" src/environments/environment.ts
-        fi
-
-        if [ "$baseDomainV3" != "$Expected_baseDomainV3" ]; then
-          echo "baseDomainV3 does not match Expected value."
-          sed -i "s#baseDomainV3: '[^']*'#baseDomainV3: '$Expected_baseDomainV3'#" src/environments/environment.ts
-        fi
-
-        if [ "$testingSiteKey" != "$Expected_testingSiteKey" ]; then
-          echo "testingSiteKey does not match Expected value."
-          sed -i "s#testingSiteKey: '[^']*'#testingSiteKey: '$Expected_testingSiteKey'#" src/environments/environment.ts
-        fi
-
-        echo "Updated environment.ts file:"
-        cat src/environments/environment.ts
+          sed -i
