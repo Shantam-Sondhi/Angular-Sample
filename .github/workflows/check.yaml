@@ -24,7 +24,7 @@ jobs:
         Expected_cookieDomain='ab333c.com'
         Expected_baseConsole='http://abc.com/#/'
         Expected_baseDomain='https://rpt.abc.com/'
-        Expected_baseDomainV2=''https://rptcore.abc.com/api/roles/'
+        Expected_baseDomainV2='https://rptcore.abc.com/api/roles/'
         Expected_baseDomainV3='https://rptcore.abc.com/api/',
         Expected_testingSiteKey='mRgmAARMSQAyz_Y5555'
         
