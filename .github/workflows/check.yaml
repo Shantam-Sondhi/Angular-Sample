@@ -19,24 +19,59 @@ jobs:
     - name: Check environment variables
       id: check_env_vars
       run: |
-        # Define expected values
-        EXPECTED_API_URL="https://api.example.com"
-        EXPECTED_API_KEY="your-api-key"
+        # Define Expected values
+        Expected_baseWebsite='https://abc.com/home'
+        Expected_cookieDomain='ab333c.com'
+        Expected_baseConsole='http://abc.com/#/'
+        Expected_baseDomain='https://rpt.abc.com/'
+        Expected_baseDomainV2=''https://rptcore.abc.com/api/roles/'
+        Expected_baseDomainV3='https://rptcore.abc.com/api/',
+        Expected_testingSiteKey='mRgmAARMSQAyz_Y5555'
         
         # Read the environment.ts file and extract values
-        API_URL=$(grep -oP 'API_URL: "\K[^"]+' src/environments/environment.ts)
-        API_KEY=$(grep -oP 'API_KEY: "\K[^"]+' src/environments/environment.ts)
-        
-        # Check if the values match the expected values
-        if [ "$API_URL" != "$EXPECTED_API_URL" ]; then
-          echo "API_URL does not match expected value."
-          sed -i "s/API_URL: \"[^\"]*\"/API_URL: \"$EXPECTED_API_URL\"/" src/environments/environment.ts
+        cat src/environments/environment.ts
+        baseWebsite=$(grep -oP 'baseWebsite: "\K[^"]+' src/environments/environment.ts)
+        cookieDomain=$(grep -oP 'cookieDomain: "\K[^"]+' src/environments/environment.ts)
+        baseConsole=$(grep -oP 'baseConsole: "\K[^"]+' src/environments/environment.ts)
+        baseDomain=$(grep -oP 'baseDomain: "\K[^"]+' src/environments/environment.ts)
+        baseDomainV2=$(grep -oP 'baseDomainV2: "\K[^"]+' src/environments/environment.ts)
+        baseDomainV3=$(grep -oP 'baseDomainV3: "\K[^"]+' src/environments/environment.ts)
+        testingSiteKey=$(grep -oP 'testingSiteKey: "\K[^"]+' src/environments/environment.ts)
+
+        # Check if the values match the Expected values
+        if [ "$baseWebsite" != "$Expected_baseWebsite" ]; then
+          echo "baseWebsite does not match Expected value."
+          sed -i "s/baseWebsite: \"[^\"]*\"/baseWebsite: \"$Expected_baseWebsite\"/" src/environments/environment.ts
         fi
         
-        if [ "$API_KEY" != "$EXPECTED_API_KEY" ]; then
-          echo "API_KEY does not match expected value."
-          sed -i "s/API_KEY: \"[^\"]*\"/API_KEY: \"$EXPECTED_API_KEY\"/" src/environments/environment.ts
+        if [ "$cookieDomain" != "$Expected_cookieDomain" ]; then
+          echo "cookieDomain does not match Expected value."
+          sed -i "s/cookieDomain: \"[^\"]*\"/cookieDomain: \"$Expected_cookieDomain\"/" src/environments/environment.ts
         fi
-        
-        echo "All environment variables match the expected values."
+
+        if [ "$baseConsole" != "$Expected_baseConsole" ]; then
+          echo "baseConsole does not match Expected value."
+          sed -i "s/baseConsole: \"[^\"]*\"/baseConsole: \"$Expected_baseConsole\"/" src/environments/environment.ts
+        fi
+
+        if [ "$baseDomain" != "$Expected_baseDomain" ]; then
+          echo "baseDomain does not match Expected value."
+          sed -i "s/baseDomain: \"[^\"]*\"/baseDomain: \"$Expected_baseDomain\"/" src/environments/environment.ts
+        fi
+
+        if [ "$baseDomainV2" != "$Expected_baseDomainV2" ]; then
+          echo "baseDomainV2 does not match Expected value."
+          sed -i "s/baseDomainV2: \"[^\"]*\"/baseDomainV2: \"$Expected_baseDomainV2\"/" src/environments/environment.ts
+        fi
+
+        if [ "$baseDomainV3" != "$Expected_baseDomainV3" ]; then
+          echo "baseDomainV3 does not match Expected value."
+          sed -i "s/baseDomainV3: \"[^\"]*\"/baseDomainV3: \"$Expected_baseDomainV3\"/" src/environments/environment.ts
+        fi
+
+        if [ "$testingSiteKey" != "$Expected_testingSiteKey" ]; then
+          echo "testingSiteKey does not match Expected value."
+          sed -i "s/testingSiteKey: \"[^\"]*\"/testingSiteKey: \"$Expected_testingSiteKey\"/" src/environments/environment.ts
+        fi
+
         cat src/environments/environment.ts
